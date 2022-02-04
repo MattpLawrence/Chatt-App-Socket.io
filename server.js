@@ -27,13 +27,18 @@ io.on("connection", (socket) => {
     // Broadcast when user connects to everyone but user in the room
     socket.broadcast
       .to(user.room)
-      .emit("message", formatMessage(botName, "A user has joined the chat"));
+      .emit(
+        "message",
+        formatMessage(botName, `${user.username} has joined the chat`)
+      );
   });
 
   // listen for ChatMessage to be submitted
   socket.on("chatMessage", (msg) => {
+    const user = getCurrentUser(socket.id);
+
     // submit the message to everyone
-    io.emit("message", formatMessage("user", msg));
+    io.to(user.room).emit("message", formatMessage(user.username, msg));
   });
 
   // Run when client disconnects
