@@ -4,6 +4,7 @@ const path = require("path");
 const http = require("http");
 const socketio = require("socket.io");
 const formatMessage = require("./utils/messages");
+const { userJoin, getCurrentUser } = require("./utils/users");
 
 const app = express();
 const server = http.createServer(app);
@@ -16,14 +17,17 @@ const botName = "GammerGabble Bot";
 // run when client connects
 io.on("connection", (socket) => {
   socket.on("joinRoom", ({ username, room }) => {
+    const user = userJoin(socket.id, username, room);
+
+    socket.join(user.room);
+
     //emit object to be grabbed with socket.on() in main.js to be viewable only the one connecting
     socket.emit("message", formatMessage(botName, "Welcome to Gamer Gabble"));
 
-    // Broadcast when user connects to everyone but user
-    socket.broadcast.emit(
-      "message",
-      formatMessage(botName, "A user has joined the chat")
-    );
+    // Broadcast when user connects to everyone but user in the room
+    socket.broadcast
+      .to(user.room)
+      .emit("message", formatMessage(botName, "A user has joined the chat"));
   });
 
   // listen for ChatMessage to be submitted
