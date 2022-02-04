@@ -12,10 +12,19 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // run when client connects
 io.on("connection", (socket) => {
-  console.log("new connection");
-
-  //emit object to be grabbed with socket.on() in main.js
+  //emit object to be grabbed with socket.on() in main.js to be viewable only the one connecting
   socket.emit("message", "Welcome to Gamer Gabble");
+
+  // Broadcast when user connects to everyone but user
+  socket.broadcast.emit("message", "A user has joined the chat");
+
+  // Run when client disconnects
+  socket.on("disconnect", () => {
+    io.emit("message", " A user has left the chat");
+  });
+
+  // broadcast to everyone
+  io.emit();
 });
 
 const PORT = process.env.PORT || 3000;
