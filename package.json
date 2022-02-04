@@ -1,0 +1,25 @@
+{
+  "name": "chatt-app-socket.io",
+  "version": "1.0.0",
+  "description": "Basic chat app with socket.io",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MattpLawrence/Chatt-App-Socket.io.git"
+  },
+  "keywords": [],
+  "author": "Matthew Lawrence",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MattpLawrence/Chatt-App-Socket.io/issues"
+  },
+  "homepage": "https://github.com/MattpLawrence/Chatt-App-Socket.io#readme",
+  "dependencies": {
+    "express": "^4.17.2",
+    "moment": "^2.29.1",
+    "socket.io": "^4.4.1"
+  }
+}
