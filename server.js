@@ -4,7 +4,10 @@ const path = require("path");
 const http = require("http");
 const socketio = require("socket.io");
 const handlebars = require("express-handlebars");
+
+const models = require("./models");
 const sequelize = require("./config/connection");
+const routes = require("./controllers");
 const hbs = handlebars.create({});
 const formatMessage = require("./utils/messages");
 const {
@@ -25,6 +28,8 @@ app.use(express.static(path.join(__dirname, "public")));
 // set handlebars as default template engine
 app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
+
+app.use(routes);
 
 const botName = "GammerGabble Bot";
 
