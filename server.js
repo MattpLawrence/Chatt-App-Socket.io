@@ -31,6 +31,7 @@ app.set("view engine", "handlebars");
 
 app.use(routes);
 
+// ************************************Socket.io**************************************
 const botName = "GammerGabble Bot";
 
 // run when client connects
