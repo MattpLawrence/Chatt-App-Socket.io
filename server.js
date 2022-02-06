@@ -3,6 +3,9 @@ const path = require("path");
 //needed to run socket.io
 const http = require("http");
 const socketio = require("socket.io");
+const handlebars = require("express-handlebars");
+const sequelize = require("./config/connection");
+const hbs = handlebars.create({});
 const formatMessage = require("./utils/messages");
 const {
   userJoin,
@@ -15,7 +18,13 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
+
+// set handlebars as default template engine
+app.engine("handlebars", hbs.engine);
+app.set("view engine", "handlebars");
 
 const botName = "GammerGabble Bot";
 
